@@ -7,12 +7,16 @@ use Convertisseur\Models\Rate;
 
 class MainController {
 
-    //function to show the currencies from the API
+    //function to show the homepage
     public function home() {
+        // All the currencies from the API to display it in the two select balises
         $currencies = Currency::findAllCurrencies();
+
+        // Converted amount returned by the API, when I give the currencies "from" and "to"
+       // $convertedAmount = Rate::convertAmount();
+        
         $this->show('home', ['currencies' => $currencies]);
     }
-
 
     // function to show the views
     private function show($viewName, $viewVars=[]) {
