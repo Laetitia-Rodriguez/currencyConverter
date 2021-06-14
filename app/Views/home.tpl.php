@@ -1,5 +1,3 @@
-<?php require "inc/header.tpl.php"?>
-
 <form id="form" action="result.php" method="POST">
     <fieldset class="fielset">
         <label class="form__label">Montant</label>
@@ -23,6 +21,3 @@
     </fieldset>
     <input type="submit" value="convertir">
 </form>
-
-<?php require "inc/footer.tpl.php"?>
-        

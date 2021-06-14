@@ -1,5 +1,7 @@
 <?php
 
+namespace Convertisseur\Models;
+
 class Rate {
 
     private $amount;

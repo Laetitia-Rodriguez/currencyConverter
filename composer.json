@@ -1,0 +1,16 @@
+{
+    "name": "Convertisseur",
+    "description": "Application to convert an amount to another currency",
+    "authors" : [
+        {
+            "name": "Laetitia Rodriguez",
+            "email": "contact@laetitiarodriguez.fr"
+        }
+    ],
+    "require": {
+        "altorouter/altorouter": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {"Convertisseur\\": "app/"}
+    }
+}
