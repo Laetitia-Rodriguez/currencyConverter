@@ -13,7 +13,7 @@ header h1 {
     align-items: center;
 }
 
-.fielset {
+.fieldset{
     display:flex;
     flex-direction: column;
     margin-bottom: 2em;

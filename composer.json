@@ -1,5 +1,5 @@
 {
-    "name": "Convertisseur",
+    "name": "laetitia/convertisseur",
     "description": "Application to convert an amount to another currency",
     "authors" : [
         {

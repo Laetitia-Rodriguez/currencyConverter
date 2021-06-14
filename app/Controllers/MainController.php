@@ -8,9 +8,9 @@ use Convertisseur\Models\Rate;
 class MainController {
 
     //function to show the currencies from the API
-    public function currencies() {
-        $currencies = Currency::findAll();
-        $this->show('currencies', ['currencies' => $currencies]);
+    public function home() {
+        $currencies = Currency::findAllCurrencies();
+        $this->show('home', ['currencies' => $currencies]);
     }
 
 
@@ -25,5 +25,4 @@ class MainController {
         include(__DIR__.'/../Views/' . $viewName . '.tpl.php');
         include(__DIR__.'/../Views/inc/footer.tpl.php');
     }
-    
 }
