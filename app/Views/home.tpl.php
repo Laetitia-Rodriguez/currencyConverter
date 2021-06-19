@@ -1,39 +1,83 @@
 <?php
+session_start();
+/*
+Call to the free API exchangerate-api.com for getting all the currencies
+*/
 
-//viewVars from MainController
-$currencies = $viewVars['currencies'];
-var_dump($currencies);
-//$convertedAmount = $viewVars['convertedAmount'];
-//var_dump($convertedAmount);
+// Endpoint for getting the currencies
+// It works with a free key they gave me when subscribe = f695dcb28e35ed5560d70040 ;
+$responseCurrencies = file_get_contents('https://v6.exchangerate-api.com/v6/f695dcb28e35ed5560d70040/codes');
+$resultsCurrencies = json_decode($responseCurrencies, true);
+// print_r($resultsCurrencies);
+
+/*
+Call to the API for converting an amount
+*/
+if (!empty($_POST['amount']) && !empty($_POST['currencyFrom']) && !empty($_POST['currencyTo'])) {
+    // I get the $_POST datas from the form
+
+    $amount = $_POST['amount'];
+    $from = $_POST['currencyFrom'];
+    $to = $_POST['currencyTo'];
+    
+    // Endpoint's free API exchangerate to convert an amount
+    $responseConvertedAmount = file_get_contents('https://v6.exchangerate-api.com/v6/f695dcb28e35ed5560d70040/pair/' . $from . '/' . $to . '/' . $amount);
+    $resultConvertedAmount = json_decode($responseConvertedAmount, true);
+    // print_r($resultConvertedAmount['conversion_result']);
+    // print_r($resultConvertedAmount);
+    // return $resultConvertedAmount;
+    $datas = [$_POST['amount'], $_POST['currencyFrom'], $_POST['currencyTo'], $resultConvertedAmount['conversion_result']];
+    // print_r($datas);
+    function post_redirect($baseUrl, $resultConvertedAmount)
+    {
+        $_SESSION['post_data'] = [$_POST, $resultConvertedAmount['conversion_result']];
+        header("Location: " . $baseUrl);
+    }
+    print_r($_SESSION['post_data']);
+    post_redirect($baseUrl, $resultConvertedAmount);
+    exit;
+}
+
+else {
 ?>
+    <form id="form" action="" method="POST">
+        <fieldset class="fieldset">
+            <label class="form__label" for="amount">Montant</label>
+            <input id="form__input" name="amount">
+        </fieldset>
+        <fieldset class="fieldset">
+            <label class="form__label" for="currency-from">De</label>
+            <select name="currencyFrom" id="currency-from">
+                <option>-- Choisissez une devise --</option> 
+                <?php 
+                    for ($i=0 ; $i<count($resultsCurrencies) ; $i++) {
+                        echo "<option value=" . $resultsCurrencies['supported_codes'][$i][0] . ">" . $resultsCurrencies['supported_codes'][$i][1] .
+                        "</option>";
+                    } ?>
+            </select>
+        </fieldset>
+        <fieldset class="fieldset">
+            <label class="form__label" for="currency-to">vers</label>
+            <select name="currencyTo" id="currency-to"> 
+            <option>-- Choisissez une devise --</option> 
+                <?php 
+                    for ($i=0 ; $i<count($resultsCurrencies) ; $i++) {
+                        echo "<option value=" . $resultsCurrencies['supported_codes'][$i][0] . ">" . $resultsCurrencies['supported_codes'][$i][1] .
+                        "</option>";
+                    } ?>
+            </select>
+        </fieldset>
+        <input type="submit" value="convertir">
+    </form>
 
-<form id="form" action="./Rate.php" method="get">
-    <fieldset class="fieldset">
-        <label class="form__label" for="amount">Montant</label>
-       
-        <input id="form__input" name="amount">
-    </fieldset>
-    <fieldset class="fieldset">
-        <label class="form__label" for="currency-from">De</label>
-        <select name="currency-from" id="currency-from">
-            <option>-- Choisissez la devise à convertir --</option>
-            <?php foreach ($currencies as $currency) :?>
-                <option value="<?= $currency ?>">
-                    <?= $currency['currencyName'] ?>
-                </option>
-            <?php endforeach ?>
-        </select>
-    </fieldset>
-    <fieldset class="fieldset">
-        <label class="form__label" for="currency-to">vers</label>
-        <select name="currency-to" id="currency-to">
-            <option>-- Choisissez la devise à obtenir --</option>
-            <?php foreach ($currencies as $currency) :?>
-                <option value="<?= $currency ?>">
-                    <?= $currency ?>
-                </option>
-            <?php endforeach ?>
-    </fieldset>
-    <input type="submit" value="convertir">
-    <!-- <p name="converted-amount"><?= $convertedAmount ?></p>  -->
-</form>
+
+    
+
+<?php
+}
+
+if (!empty($_SESSION)) :?>
+
+<p>Le résultat de la conversion est : <? $_SESSION['post_data'][1] ?></p>
+
+<?php endif ?>

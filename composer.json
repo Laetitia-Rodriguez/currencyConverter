@@ -10,7 +10,7 @@
     "require": {
         "altorouter/altorouter": "^2.0"
     },
-    "autoload": {
+     "autoload": {
         "psr-4": {"Convertisseur\\": "app/"}
     }
 }

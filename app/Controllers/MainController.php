@@ -2,21 +2,20 @@
 
 namespace Convertisseur\Controllers;
 
-use Convertisseur\Models\Currency;
-use Convertisseur\Models\Rate;
-
 class MainController {
-
+    
     //function to show the homepage
     public function home() {
-        // All the currencies from the API to display it in the two select balises
-        $currencies = Currency::findAllCurrencies();
 
-        // Converted amount returned by the API, when I give the currencies "from" and "to"
-       // $convertedAmount = Rate::convertAmount();
-        
-        $this->show('home', ['currencies' => $currencies]);
+       $this->show('home');
     }
+
+    /*
+    //function to show the homepage with amount converted
+    public function convertAmount() {
+
+        $this->show('home');
+     } */
 
     // function to show the views
     private function show($viewName, $viewVars=[]) {
@@ -30,3 +29,4 @@ class MainController {
         include(__DIR__.'/../Views/inc/footer.tpl.php');
     }
 }
+?>

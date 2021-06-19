@@ -10,7 +10,6 @@ $baseURL = $_SERVER['BASE_URI'];
 require __DIR__.'/../app/Controllers/MainController.php';
 
 
-
 // Altorouter is a composer dependency for router
 $router = new AltoRouter();
 
@@ -26,7 +25,16 @@ $router->map(
     ["controller" => "MainController",
     "method" => "home"],
     'main-home'
-);
+); 
+
+// Template for the homepage with the convert form
+$router->map(
+    'POST', 
+    '/', 
+    ["controller" => "MainController",
+    "method" => "convertAmount"],
+    'main-convertAmount'
+); 
 
 $match = $router->match();
 
@@ -38,7 +46,7 @@ if ($match) {
 }
 
 else {
-    exit("404");
+    exit("probleme");
 }
 
         
