@@ -1,5 +1,5 @@
-# convertisseur
+# currencyConverter
 
-Convertisseur de devises en php
+Currency converter made in PHP MVC
 
-Formulaire permettant de convertir un montant d'une devise à une autre
+Form to convert an amount from a currency to another, using an API (currencies, rates)
