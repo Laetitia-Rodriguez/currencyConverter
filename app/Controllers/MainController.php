@@ -10,12 +10,12 @@ class MainController {
        $this->show('home');
     }
 
-    /*
+    
     //function to show the homepage with amount converted
     public function convertAmount() {
 
         $this->show('home');
-     } */
+     } 
 
     // function to show the views
     private function show($viewName, $viewVars=[]) {
