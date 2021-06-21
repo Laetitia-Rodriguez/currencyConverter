@@ -1,8 +1,11 @@
 body {
     text-align: center;
+    background-color: darkcyan;
 }
 
 header h1 {
+    margin-top: 2em;
+    margin-bottom: 2em;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -22,5 +25,17 @@ header h1 {
 .form__label {
     font-weight: bold;
     font-size: 1em;
-    
+}
+
+#currency-from, #currency-to {
+    max-width: 200px;
+    margin-bottom: 2em;
+}
+
+#form__submit {
+    margin-bottom: 3em;
+}
+
+#result {
+    font-weight: bold;
 }

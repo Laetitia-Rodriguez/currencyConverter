@@ -49,7 +49,7 @@ else {
         <fieldset class="fieldset">
             <label class="form__label" for="currency-from">De</label>
             <select name="currencyFrom" id="currency-from">
-                <option>-- Choisissez une devise --</option> 
+                <option>Choisissez une devise</option> 
                 <?php 
                     
                     for ($i=0 ; $i<count($resultsCurrencies['supported_codes']) ; $i++) {
@@ -63,7 +63,7 @@ else {
         <fieldset class="fieldset">
             <label class="form__label" for="currency-to">vers</label>
             <select name="currencyTo" id="currency-to"> 
-            <option>-- Choisissez une devise --</option> 
+            <option>Choisissez une devise</option> 
                 <?php 
                     for ($i=0 ; $i<count($resultsCurrencies['supported_codes']) ; $i++) {
                         echo "<option value=" . $resultsCurrencies['supported_codes'][$i][0] . ">" . $resultsCurrencies['supported_codes'][$i][1] .
@@ -71,14 +71,15 @@ else {
                     } ?>
             </select>
         </fieldset>
-        <input type="submit" value="convertir">
+        <input id="form__submit" type="submit" value="convertir">
     </form>
     <!-- It displays only after submit form -->
     <?php
     if (!empty($_SESSION['post_data'][1])) {
-        echo"<p>Le résultat de la conversion est : " . ($_SESSION['post_data'][1]) . "</p>";
+        echo"<p id='result'>" . ($_SESSION['post_data'][0]['amount']) . " " . ($_SESSION['post_data'][0]['currencyFrom']). " => " . ($_SESSION['post_data'][1]) . " " . ($_SESSION['post_data'][0]['currencyTo']) . "</p>";
+        
     }
     
-    //print_r($_SESSION['post_data']);
+    // print_r($_SESSION['post_data']);
 }
 
