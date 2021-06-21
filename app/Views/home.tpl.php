@@ -4,8 +4,8 @@ session_start();
 Call to the free API exchangerate-api.com for getting all the currencies
 */
 
-// Endpoint for getting the currencies
 // It works with a free key they gave me when subscribe = f695dcb28e35ed5560d70040 ;
+// Endpoint for getting the currencies
 $responseCurrencies = file_get_contents('https://v6.exchangerate-api.com/v6/f695dcb28e35ed5560d70040/codes');
 $resultsCurrencies = json_decode($responseCurrencies, true);
 // print_r($resultsCurrencies);
@@ -33,7 +33,8 @@ if (!empty($_POST['amount']) && !empty($_POST['currencyFrom']) && !empty($_POST[
         $_SESSION['post_data'] = [$_POST, $resultConvertedAmount['conversion_result']];
         header("Location: " . $baseUrl);
     }
-    print_r($_SESSION['post_data']);
+    // print_r($_SESSION['post_data']);
+    
     post_redirect($baseUrl, $resultConvertedAmount);
     exit;
 }
@@ -50,10 +51,13 @@ else {
             <select name="currencyFrom" id="currency-from">
                 <option>-- Choisissez une devise --</option> 
                 <?php 
-                    for ($i=0 ; $i<count($resultsCurrencies) ; $i++) {
+                    
+                    for ($i=0 ; $i<count($resultsCurrencies['supported_codes']) ; $i++) {
                         echo "<option value=" . $resultsCurrencies['supported_codes'][$i][0] . ">" . $resultsCurrencies['supported_codes'][$i][1] .
                         "</option>";
-                    } ?>
+                    }
+                    ?>
+                    
             </select>
         </fieldset>
         <fieldset class="fieldset">
@@ -61,7 +65,7 @@ else {
             <select name="currencyTo" id="currency-to"> 
             <option>-- Choisissez une devise --</option> 
                 <?php 
-                    for ($i=0 ; $i<count($resultsCurrencies) ; $i++) {
+                    for ($i=0 ; $i<count($resultsCurrencies['supported_codes']) ; $i++) {
                         echo "<option value=" . $resultsCurrencies['supported_codes'][$i][0] . ">" . $resultsCurrencies['supported_codes'][$i][1] .
                         "</option>";
                     } ?>
@@ -69,15 +73,12 @@ else {
         </fieldset>
         <input type="submit" value="convertir">
     </form>
-
-
+    <!-- It displays only after submit form -->
+    <?php
+    if (!empty($_SESSION['post_data'][1])) {
+        echo"<p>Le résultat de la conversion est : " . ($_SESSION['post_data'][1]) . "</p>";
+    }
     
-
-<?php
+    //print_r($_SESSION['post_data']);
 }
 
-if (!empty($_SESSION)) :?>
-
-<p>Le résultat de la conversion est : <? $_SESSION['post_data'][1] ?></p>
-
-<?php endif ?>
